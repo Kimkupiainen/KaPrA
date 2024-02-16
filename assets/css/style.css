@@ -15,8 +15,8 @@ body {
 }
 
 a {
-  text-decoration: none;
-  color: #67b0d1;
+    text-decoration: none;
+    color: #67b0d1;
 }
 
 a:hover {
@@ -915,7 +915,7 @@ section {
   text-align: center;
   background: rgba(103, 176, 209, 0.75);
   transition: 0.3s;
-  width: 50%;
+  width: 100%;
 }
 
 .portfolio .portfolio-wrap .portfolio-links a:hover {
