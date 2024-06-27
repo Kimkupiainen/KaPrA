@@ -18,6 +18,10 @@ a {
     text-decoration: none;
     color: #67b0d1;
 }
+a:link{
+	color:white;
+	
+}
 
 a:hover {
   color: #8ec4dd;
