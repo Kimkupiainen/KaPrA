@@ -27,7 +27,21 @@ a:hover {
   color: #8ec4dd;
   text-decoration: none;
 }
+.privacy h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 30px;
+  color: #2f4d5a;
+}
 
+.privacy ul {
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.privacy li {
+  margin-bottom: 10px;
+}
 h1,
 h2,
 h3,
