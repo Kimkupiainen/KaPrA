@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Radankäyttömaksulaskuri – KaPrA</title>
+  <meta content="" name="description">
+
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    /* Vain asettelu, ei värejä */
+    .rkm-page { padding: 60px 0; }
+    .rkm-laskuri { padding: 2rem; margin-bottom: 2.5rem; }
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .slider-row { display: flex; align-items: center; gap: 12px; }
+    .slider-row input[type=range] { flex: 1; }
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .result-card { padding: 1rem; }
+    .result-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 0.4rem;
+    }
+    .result-value { font-size: 1.4rem; font-weight: 600; }
+    .rkm-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .rkm-table th {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+      opacity: 0.6;
+    }
+    .rkm-table td { padding: 12px 14px; }
+    .rkm-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .rkm-table tbody tr.active-row { font-weight: bold; }
+    @media (max-width: 640px) {
+      .input-grid { grid-template-columns: 1fr; }
+      .result-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header — sama rakenne kuin index.html -->
+  <header id="header" class="fixed-top header-transparent">
+    <div class="container d-flex align-items-center justify-content-between position-relative">
+
+      <div class="logo">
+        <h1 class="text-light"><a href="index.html">KaPrA</a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link" href="index.html">Etusivu</a></li>
+          <li><a class="nav-link" href="index.html#about">Tietoa meistä</a></li>
+          <li><a class="nav-link" href="index.html#cta">Ota yhteyttä</a></li>
+          <li><a class="nav-link" href="index.html#contact">Aittokosken ampumaurheilukeskus</a></li>
+          <li><a class="nav-link active" href="rkm-laskuri.html">Radankäyttömaksu</a></li>
+          <li><a href="tietosuojaseloste.html">Tietosuojaseloste</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>
+
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section id="rkm" class="about rkm-page">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Laskuri</h2>
+          <p>Porrastettu hinnoittelu ulkopuolisten kilpailujärjestäjien radankäytölle. Mitä isompi kilpailu sitä pienempi Radankäyttömaksuprosentti.</p>
+        </div>
+
+        <!-- LASKURI -->
+        <div class="rkm-laskuri section-bg">
+          <div class="input-grid">
+            <div>
+              <label>Osallistujia — <strong id="p-val">50 hlö</strong></label>
+              <div class="slider-row">
+                <input type="range" id="participants" min="5" max="200" step="5" value="50">
+              </div>
+            </div>
+            <div>
+              <label>Osallistumismaksu / hlö — <strong id="f-val">30 €</strong></label>
+              <div class="slider-row">
+                <input type="range" id="fee" min="5" max="150" step="5" value="30">
+              </div>
+            </div>
+          </div>
+
+          <div class="result-grid">
+            <div class="result-card">
+              <div class="result-label">Kokonaispotti</div>
+              <div class="result-value" id="r-pot"></div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Prosenttiosuus</div>
+              <div class="result-value" id="r-pct"></div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Radankäyttömaksu</div>
+              <div class="result-value" id="r-fee"></div>
+            </div>
+            <div class="result-card">
+              <div class="result-label">Järjestäjälle jää</div>
+              <div class="result-value" id="r-org"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PORTAIKKOTAULUKKO -->
+        <h3>Maksuportaat</h3>
+        <p>Maksu lasketaan kilpailun kokonaispotista (osallistujat × osallistumismaksu). Aktiivinen porras on lihavoitu.</p>
+
+        <table class="rkm-table" style="margin-top: 1.5rem;">
+          <thead>
+            <tr>
+              <th>Kokonaispotti</th>
+              <th>Osuus</th>
+              <th>Tyypillinen esimerkki</th>
+              <th>Esim. radankäyttömaksu</th>
+            </tr>
+          </thead>
+          <tbody id="tier-body"></tbody>
+        </table>
+		<br>
+		<br>
+		<h3>Voit myös ottaa yhteyttä ja neuvotella omasta käyttömaksutarkoituksestasi</h3>
+
+        <div style="margin-top: 2.5rem;">
+          <a href="index.html" class="about-btn"><i class="bx bx-chevron-left"></i> Takaisin etusivulle</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>KaPrA</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        Designed by <a href="https://kimkupiainen.com/">Kim Kupiainen</a>, using <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/js/minimain.js"></script>
+
+  <script>
+    const tiers = [
+      { min: 0,     max: 249,     pct: 16, example: "10 hlö × 5–20 €"       },
+      { min: 250,   max: 599,     pct: 14, example: "20 hlö × 15–25 €"      },
+      { min: 600,   max: 1199,    pct: 12, example: "30 hlö × 25–40 €"      },
+      { min: 1200,  max: 2999,    pct: 10, example: "50 hlö × 30–50 €"      },
+      { min: 3000,  max: 6999,    pct:  8, example: "100 hlö × 30–60 €"     },
+      { min: 7000,  max: 14999,   pct:  6, example: "100 hlö × 70–100 €"    },
+      { min: 15000, max: Infinity, pct:  5, example: "100+ hlö × 100–150 €" },
+    ];
+
+    function fmt(n) { return n.toLocaleString('fi-FI') + ' €'; }
+    function getTier(pot) { return tiers.find(t => pot >= t.min && pot <= t.max); }
+    function fmtRange(min, max) {
+      return max === Infinity
+        ? min.toLocaleString('fi-FI') + ' € →'
+        : min.toLocaleString('fi-FI') + '–' + max.toLocaleString('fi-FI') + ' €';
+    }
+
+    function renderTable(activePot) {
+      const tbody = document.getElementById('tier-body');
+      tbody.innerHTML = '';
+      tiers.forEach(t => {
+        const isActive = activePot >= t.min && activePot <= t.max;
+        const midPot = t.max === Infinity ? t.min * 1.3 : (t.min + t.max) / 2;
+        const exFee = Math.round(midPot * t.pct / 100);
+        const tr = document.createElement('tr');
+        if (isActive) tr.className = 'active-row';
+        tr.innerHTML = `
+          <td>${fmtRange(t.min, t.max)}</td>
+          <td>${t.pct}%</td>
+          <td>${t.example}</td>
+          <td>~${exFee.toLocaleString('fi-FI')} €</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function update() {
+      const p = parseInt(document.getElementById('participants').value);
+      const f = parseInt(document.getElementById('fee').value);
+      document.getElementById('p-val').textContent = p + ' hlö';
+      document.getElementById('f-val').textContent = f + ' €';
+      const pot = p * f;
+      const tier = getTier(pot);
+      const fee = Math.round(pot * tier.pct / 100);
+      document.getElementById('r-pot').textContent = fmt(pot);
+      document.getElementById('r-pct').textContent = tier.pct + '%';
+      document.getElementById('r-fee').textContent = fmt(fee);
+      document.getElementById('r-org').textContent = fmt(pot - fee);
+      renderTable(pot);
+    }
+
+    document.getElementById('participants').addEventListener('input', update);
+    document.getElementById('fee').addEventListener('input', update);
+    update();
+  </script>
+
+</body>
+</html>
